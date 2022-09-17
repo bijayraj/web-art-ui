@@ -23,7 +23,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavtopComponent } from './navtop/navtop.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MatList, MatListModule } from '@angular/material/list';
@@ -32,7 +32,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TruncatePipe } from './helpers/truncate.pipe';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import {MatDialogModule} from '@angular/material/dialog'
+import { MatDialogModule } from '@angular/material/dialog'
 import { appInitializer } from './helpers/app.initializer';
 import { AuthenticationService } from './services/authentication.service';
 import { ArtAddComponent } from './art-add/art-add.component';
@@ -77,8 +77,9 @@ import { SafeHtmlPipe } from './helpers/safeHtml.pipe';
     MatSortModule,
     MatPaginatorModule,
     MatDialogModule
-    
-    
+
+
+
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService] },
@@ -86,7 +87,8 @@ import { SafeHtmlPipe } from './helpers/safeHtml.pipe';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
-      multi: true}
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

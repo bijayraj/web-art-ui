@@ -1,1 +1,125 @@
-<p>home works!</p>
+<div class="container-top">
+    <div class="header-top">
+        <h1 class="header-top-text">Welcome to Tap Tour</h1>
+        <h2>A smart way to share your Arts!</h2>
+    </div>
+
+    <div class="header-body">
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2>Just Four Steps..</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>1 - Create Record</mat-card-title>
+                    </mat-card-header>
+                    <div mat-card-image class="image-container" style="text-align:center;">
+                        <mat-icon class="large-icon">save</mat-icon>
+                    </div>
+                    <mat-card-content>
+                        <p>
+                            Use this portal to create or edit records.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button (click)="navigate('arts')">
+                            <mat-icon>view_comfy
+
+                            </mat-icon>View Arts
+                        </button>
+                        <div fxFlex></div>
+
+                        <button mat-button (click)="navigate('create')">
+                            <mat-icon>rate_review</mat-icon>Create New
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+            <div class="col-3">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>2 - Create NFC Tags</mat-card-title>
+                    </mat-card-header>
+                    <div mat-card-image class="image-container" style="text-align:center;">
+                        <mat-icon class="large-icon">nfc</mat-icon>
+                    </div>
+                    <mat-card-content>
+                        <p class="content-text">
+                            Use the app to create tags for the record.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>
+                            <mat-icon>android</mat-icon>Get App
+                        </button>
+                        <div fxFlex></div>
+
+                        <button mat-button>
+                            <mat-icon>phone_iphone</mat-icon>Get App
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+
+            <div class="col-3">
+
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>3 - Place tags</mat-card-title>
+                    </mat-card-header>
+                    <div mat-card-image class="image-container" style="text-align:center;">
+                        <mat-icon class="large-icon">pin_drop</mat-icon>
+                    </div>
+                    <mat-card-content>
+                        <p class="content-text">
+                            Just place the NFC tags near the art.
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>
+                            <mat-icon>notes</mat-icon>Details
+                        </button>
+                        <div fxFlex></div>
+
+                        <button mat-button>
+                            <mat-icon>help</mat-icon>Help
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+
+            </div>
+
+            <div class="col-3">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>4 - User App</mat-card-title>
+                    </mat-card-header>
+                    <div mat-card-image class="image-container" style="text-align:center;">
+                        <mat-icon class="large-icon">phonelink_ring</mat-icon>
+                    </div>
+                    <mat-card-content>
+                        <p class="content-text">
+                            User scans the tags using the App to see the magic!
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>
+                            <mat-icon>android</mat-icon>Android
+                        </button>
+                        <div fxFlex></div>
+
+                        <button mat-button>
+                            <mat-icon>phone_iphone</mat-icon>iOS
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+
+    </div>
+</div>

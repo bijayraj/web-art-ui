@@ -12,7 +12,7 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   credentials!: FormGroup;
-  error?:string;
+  error?: string;
 
   public loginValid = true;
   // public username = '';
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private _authService: AuthenticationService
   ) {
-    this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/game';
+    this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/home';
   }
 
   get f() { return this.credentials.controls; }
@@ -47,10 +47,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     //   takeUntil(this._destroySub$)
     // ).subscribe( _ => this._router.navigateByUrl(this.returnUrl));
 
+
     this.credentials = this.fb.group({
       username: ['admin@siu.edu', [Validators.required, Validators.email]],
       password: ['admin123', [Validators.required, Validators.minLength(6)]],
     });
+
+
   }
 
   public ngOnDestroy(): void {
@@ -77,7 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._authService.login(this.credentials.value).subscribe(
       async (res) => {
         console.log(res);
-        this.router.navigateByUrl('home', { replaceUrl: true });
+        this.router.navigateByUrl(this.returnUrl);
       },
       async (res) => {
         console.log('Login failed');

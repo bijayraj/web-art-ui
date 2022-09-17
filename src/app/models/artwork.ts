@@ -1,3 +1,5 @@
+import { ArtworkAsset } from "./artworkAsset";
+
 export class Artwork {
     id!: number;
     title!: string;
@@ -12,4 +14,5 @@ export class Artwork {
     createdAt?: string;
     exhibitName?: string;
     assetCount?: number;
+    ArtworkAssets?: ArtworkAsset[];
 }

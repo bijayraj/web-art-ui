@@ -1,0 +1,84 @@
+@use '@angular/material' as mat;
+
+// --- file: my-component_1.scss ---
+@import '@angular/material/theming'; // we need to add this so we could use Material functions
+
+@mixin set-theme-component-1($theme) {
+    // Extract whichever individual palettes you need from the theme.
+    $primary-palette: map-get($theme, primary);
+    $accent-palette: map-get($theme, accent);
+    $warn-palette: map-get($theme, warn);
+
+    .component-container {
+        background-color: mat-color($primary-palette); // use the mat-color function to extract the color from the palette
+        border-color: mat-color($warn-palette);
+    }
+
+
+}
+
+
+
+.header-top {
+    background-color: #5262bc;
+    height: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-direction: column;
+
+    h2 {
+        font-weight: 200;
+    }
+
+}
+
+.header-top-text {
+    font-size: 64px;
+}
+
+
+
+.container-top {
+    margin-top: -30px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.header-body {
+    margin-top: 30px;
+
+    h2 {
+        text-decoration: underline;
+        font-weight: 300;
+        font-size: 24px;
+    }
+
+}
+
+.large-icon {
+    font-size: 80px;
+}
+
+.image-container {
+
+    mat-icon {
+        height: 100px;
+        width: 100px;
+    }
+}
+
+.content-text {
+    text-align: center;
+}
+
+mat-card-title {
+    text-align: center;
+    justify-content: center;
+}
+
+mat-card-header {
+    justify-content: center;
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Route, Router, UrlSegment, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
@@ -22,7 +22,7 @@ export class AuthGuard implements CanLoad {
     } else {
       // not logged in so redirect to login page with the return url
       console.log('Caught here');
-      this.router.navigateByUrl('/login');
+      this.router.navigate(['login']);
       return false;
     }
     // return this.authService.user.pipe(
@@ -39,5 +39,19 @@ export class AuthGuard implements CanLoad {
     //   })
     // );
 
+  }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
+    const user = this.authService.userValue;
+    if (user) {
+      // logged in so return true
+      return true;
+    } else {
+      // not logged in so redirect to login page with the return url
+      console.log('Caught here');
+      this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
+      return false;
+    }
   }
 }

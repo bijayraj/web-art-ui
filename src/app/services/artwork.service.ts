@@ -18,8 +18,13 @@ export class ArtworkService {
     return this.http.get<any>(`${environment.apiUrl}/artwork/${id}`);
   }
 
-  create(userData:any) {
+  create(userData: any) {
     return this.http.post<any>(`${environment.apiUrl}/artwork`, userData)
+      .pipe(map(exhibit => exhibit));
+  }
+
+  edit(userData: any, id: number) {
+    return this.http.put<any>(`${environment.apiUrl}/artwork/${id}`, userData)
       .pipe(map(exhibit => exhibit));
   }
 
@@ -32,7 +37,7 @@ export class ArtworkService {
     return this.http.get<any>(`${environment.apiUrl}/artwork-asset/artwork/${id}`);
   }
 
-  delete(id:number){
+  delete(id: number) {
     return this.http.delete<any>(`${environment.apiUrl}/artwork/${id}`);
   }
 

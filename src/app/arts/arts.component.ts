@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { Artwork } from '../models/artwork';
 import { ArtworkService } from '../services/artwork.service';
@@ -14,17 +15,19 @@ import { ArtworkService } from '../services/artwork.service';
 })
 export class ArtsComponent implements OnInit, AfterViewInit {
 
-  allArts:Artwork[] = [];
+  allArts: Artwork[] = [];
 
-  public displayedColumns = ['id', 'title','description', 'created_at', 'actions'];
+  public displayedColumns = ['id', 'title', 'description', 'created_at', 'actions'];
   public dataSource = new MatTableDataSource<Artwork>();
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
-  constructor(private artService: ArtworkService, public dialog: MatDialog) { }
+  constructor(private artService: ArtworkService,
+    public dialog: MatDialog,
+    private router: Router) { }
 
-  loadArts(){
+  loadArts() {
     this.artService.getAll().subscribe(data => {
       this.dataSource.data = data as Artwork[];
       // console.log(data);
@@ -40,11 +43,11 @@ export class ArtsComponent implements OnInit, AfterViewInit {
 
   }
 
-  redirectToDetails(id:number){
-
+  redirectToDetails(id: number) {
+    this.router.navigate(['edit', id]);
   }
 
-  deleteArtwork(id: number,title:string): void {
+  deleteArtwork(id: number, title: string): void {
     const message = `Are you sure you want to delete "${title}"?`;
 
     const dialogData = new ConfirmDialogModel("Delete?", message);
@@ -55,18 +58,22 @@ export class ArtsComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      if(dialogResult){
-        this.artService.delete(id).subscribe(data=>{
+      if (dialogResult) {
+        this.artService.delete(id).subscribe(data => {
           console.log(data);
           this.loadArts();
         });
       }
     });
   }
-  
+
+  addArt() {
+    this.router.navigate(['create']);
+  }
 
 
-  public doFilter = (target:any) => {
+
+  public doFilter = (target: any) => {
     let htmlTarget = target as HTMLInputElement;
     this.dataSource.filter = htmlTarget.value.trim().toLocaleLowerCase();
   }

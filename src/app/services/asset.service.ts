@@ -12,13 +12,13 @@ export class AssetService {
 
   url = `${environment.apiUrl}/artwork-asset`;
 
-  constructor( private router: Router,
+  constructor(private router: Router,
     private http: HttpClient) { }
 
-  
 
 
-  uploadImage(blobData:any, name:string, ext:string, artworkId:number) {
+
+  uploadImage(blobData: any, name: string, ext: string, artworkId: number) {
     const formData = new FormData();
     formData.append('file', blobData, `myimage.${ext}`);
     formData.append('name', name);
@@ -31,7 +31,7 @@ export class AssetService {
 
 
 
-  getImages(id=1) {
+  getImages(id = 1) {
     return this.http.get<ArtworkAsset[]>(`${this.url}/artwork/${id}`);
   }
 
@@ -44,12 +44,17 @@ export class AssetService {
     return this.http.post(`${this.url}/image`, formData);
   }
 
-  deleteImage(id:number) {
+  deleteImage(id: number) {
     return this.http.delete(`${this.url}/artwork-asset/${id}`);
   }
 
-  create(userData:any) {
+  create(userData: any) {
     return this.http.post<any>(`${environment.apiUrl}/artwork-asset`, userData)
+      .pipe(map(exhibit => exhibit));
+  }
+
+  edit(userData: any, id: number) {
+    return this.http.put<any>(`${environment.apiUrl}/artwork-asset/${id}`, userData)
       .pipe(map(exhibit => exhibit));
   }
 
