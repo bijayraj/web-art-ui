@@ -41,7 +41,7 @@
                 Assets
             </h2>
             <div class="row">
-                <div class="col-8">
+                <div class="col-sm-8">
                     <label id="image-label">Image </label>
                     <mat-radio-group aria-label="Image" aria-labelledby="image-label" [(ngModel)]="uploadImage">
                         <mat-radio-button [value]="false">Enter URL</mat-radio-button>
@@ -59,7 +59,7 @@
                     </app-file-upload>
 
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4">
                     <img class="preview-img" [src]="imageUrl | safeHtml" required />
                 </div>
 
@@ -67,7 +67,7 @@
 
             <div class="row">
 
-                <div class="col-8">
+                <div class="col-sm-8">
                     <label id="image-label">Audio </label>
                     <mat-radio-group aria-label="Audio" aria-labelledby="audio-label" [(ngModel)]="uploadAudio">
                         <mat-radio-button [value]="false">Enter URL</mat-radio-button>
@@ -86,7 +86,7 @@
                         (uploadedEvent)="updateAudioUrl($event)">
                     </app-file-upload>
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4">
                     <audio controls [src]="audioUrl | safeHtml"></audio>
                 </div>
 
