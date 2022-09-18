@@ -42,22 +42,41 @@
             </h2>
             <div class="row">
                 <div class="col-8">
-                    <mat-form-field>
-                        <mat-label>Image Url</mat-label>
+                    <mat-checkbox [(ngModel)]="uploadImage">
+                        Upload New Image
+                    </mat-checkbox>
+
+                    <mat-form-field *ngIf="!uploadImage">
+                        <mat-label>Enter Image Url</mat-label>
                         <input matInput placeholder="Image Url" [(ngModel)]="imageUrl" required>
                     </mat-form-field>
+
+                    <app-file-upload *ngIf="uploadImage" requiredFileType="image/*"
+                        (uploadedEvent)="updateImageUrl($event)">
+                    </app-file-upload>
+
                 </div>
                 <div class="col-4">
                     <img class="preview-img" [src]="imageUrl | safeHtml" required />
                 </div>
+
             </div>
 
             <div class="row">
+
                 <div class="col-8">
-                    <mat-form-field>
-                        <mat-label>Audio Url</mat-label>
+                    <mat-checkbox [(ngModel)]="uploadAudio">
+                        Upload New Audio
+                    </mat-checkbox>
+
+                    <mat-form-field *ngIf="!uploadAudio">
+                        <mat-label>Enter Audio Url</mat-label>
                         <input matInput placeholder="Audio Url" [(ngModel)]="audioUrl" required>
                     </mat-form-field>
+
+                    <app-file-upload *ngIf="uploadAudio" requiredFileType="audio/*"
+                        (uploadedEvent)="updateAudioUrl($event)">
+                    </app-file-upload>
                 </div>
                 <div class="col-4">
                     <audio controls [src]="audioUrl | safeHtml"></audio>

@@ -31,6 +31,9 @@ export class ArtAddComponent implements OnInit {
   audioAsset?: ArtworkAsset;
   imageAsset?: ArtworkAsset;
 
+  uploadImage: boolean = false;
+  uploadAudio: boolean = false;
+
   constructor(private authService: AuthenticationService,
     private artworkService: ArtworkService,
     private exhibitService: ExhibitService,
@@ -234,5 +237,13 @@ export class ArtAddComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['arts']);
+  }
+
+  updateImageUrl(fullPath: string) {
+    this.imageUrl = fullPath;
+  }
+
+  updateAudioUrl(fullPath: string) {
+    this.audioUrl = fullPath;
   }
 }

@@ -37,6 +37,10 @@ import { appInitializer } from './helpers/app.initializer';
 import { AuthenticationService } from './services/authentication.service';
 import { ArtAddComponent } from './art-add/art-add.component';
 import { SafeHtmlPipe } from './helpers/safeHtml.pipe';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+
+import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 @NgModule({
   declarations: [
@@ -49,7 +53,8 @@ import { SafeHtmlPipe } from './helpers/safeHtml.pipe';
     TruncatePipe,
     SafeHtmlPipe,
     ConfirmDialogComponent,
-    ArtAddComponent
+    ArtAddComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,
@@ -76,8 +81,9 @@ import { SafeHtmlPipe } from './helpers/safeHtml.pipe';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatDialogModule
-
+    MatDialogModule,
+    MatProgressBarModule,
+    MatCheckboxModule
 
 
   ],
