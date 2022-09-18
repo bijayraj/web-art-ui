@@ -63,8 +63,37 @@ export class ArtAddComponent implements OnInit {
           console.log(data);
           console.log(this.artwork);
 
-          this.imageAsset = this.artwork.ArtworkAssets?.filter(c => c.assetType == 0).shift();
-          this.audioAsset = this.artwork.ArtworkAssets?.filter(c => c.assetType == 1).shift();
+          if (this.artwork.ArtworkAssets && this.artwork.ArtworkAssets.length > 0) {
+
+            this.imageAsset = this.artwork.ArtworkAssets?.filter(c => c.assetType == 0).shift();
+            this.audioAsset = this.artwork.ArtworkAssets?.filter(c => c.assetType == 1).shift();
+
+          } else {
+            const imageAsset = {
+              id: 0,
+              ArtworkId: 0,
+              visible: this.autoPlayAudio,
+              approved: true,
+              assetType: 0,
+              address: this.imageUrl,
+              title: 'asset',
+              description: 'description'
+            };
+
+            const audioAsset = {
+              ...imageAsset
+            };
+            this.imageAsset = imageAsset;
+            this.audioAsset = audioAsset;
+            this.audioAsset.assetType = 1;
+          }
+          // this.artForm.controls['description'].patchValue(this.artwork.description);
+          this.imageUrl = this.imageAsset?.address || '';
+          this.audioUrl = this.audioAsset?.address || '';
+          this.autoPlayAudio = this.audioAsset?.visible == undefined ? true : this.audioAsset?.visible;
+
+
+          this.title = "Edit Art"
 
 
           this.artForm.patchValue({
@@ -73,15 +102,6 @@ export class ArtAddComponent implements OnInit {
             moreInfo: this.artwork.moreInfo,
             ExhibitId: this.artwork.ExhibitId
           });
-
-          // this.artForm.controls['description'].patchValue(this.artwork.description);
-
-          const audios = data.ArtworkAssets.filter((dt: any) => dt.assetType == 1)
-          const images = data.ArtworkAssets.filter((dt: any) => dt.assetType == 0)
-          this.imageUrl = images[0].address;
-          this.audioUrl = audios[0].address;
-          this.autoPlayAudio = audios[0].visible;
-          this.title = "Edit Art"
 
         });
       }
@@ -113,13 +133,32 @@ export class ArtAddComponent implements OnInit {
       this.imageAsset!.address = this.imageUrl;
       this.audioAsset!.visible = this.autoPlayAudio;
 
-      this.assetService.edit(this.audioAsset, this.audioAsset!.id).subscribe(data => {
-        console.log('Edited audio');
-      });
+      if (this.audioAsset?.id == 0) {
+        this.audioAsset.ArtworkId = this.artwork.id;
+        this.assetService.create(this.audioAsset).subscribe(data => {
+          console.log('Created audio');
+        });
+      } else {
 
-      this.assetService.edit(this.imageAsset, this.imageAsset!.id).subscribe(data => {
-        console.log('Edited image');
-      });
+        this.assetService.edit(this.audioAsset, this.audioAsset!.id).subscribe(data => {
+          console.log('Edited audio');
+        });
+      }
+
+
+      if (this.imageAsset?.id == 0) {
+        this.imageAsset.ArtworkId = this.artwork.id;
+        this.assetService.create(this.imageAsset).subscribe(data => {
+          console.log('Created Image');
+        });
+      }
+      else {
+
+        this.assetService.edit(this.imageAsset, this.imageAsset!.id).subscribe(data => {
+          console.log('Edited image');
+        });
+      }
+
 
       const message = `The record was successfully edited.`;
       const dialogData = new ConfirmDialogModel("Success", message, true);

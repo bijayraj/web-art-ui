@@ -14,7 +14,7 @@
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput placeholder="Title" required formControlName="title">
+                    <input matInput placeholder="Title" required formControlName="title" maxlength="50">
                     <mat-error>
                         Please provide a Title
                     </mat-error>
@@ -23,7 +23,7 @@
 
                 <mat-form-field>
                     <mat-label>Description</mat-label>
-                    <input matInput placeholder="Title" required formControlName="description">
+                    <input matInput placeholder="Description" formControlName="description">
 
                 </mat-form-field>
 
@@ -56,7 +56,7 @@
                 <div class="col-8">
                     <mat-form-field>
                         <mat-label>Audio Url</mat-label>
-                        <input matInput placeholder="Audio Url" [(ngModel)]="audioUrl">
+                        <input matInput placeholder="Audio Url" [(ngModel)]="audioUrl" required>
                     </mat-form-field>
                 </div>
                 <div class="col-4">
@@ -72,7 +72,7 @@
         </div>
 
         <div style="margin-top: 20px;">
-            <button mat-raised-button color="primary" [disabled]="!artForm.valid && imageUrl != '' && audioUrl != '' "
+            <button mat-raised-button color="primary" [disabled]="!artForm.valid || imageUrl == '' || audioUrl == '' "
                 (click)="submitForm()">
                 <mat-icon>save</mat-icon> Save
             </button>
