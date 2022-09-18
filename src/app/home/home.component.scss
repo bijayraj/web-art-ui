@@ -37,6 +37,7 @@
 
 .header-top-text {
     font-size: 64px;
+    text-align: center;
 }
 
 
@@ -98,4 +99,14 @@ mat-card-header {
 
 .icon4 {
     color: #C2185B
+}
+
+.example-card {
+    margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .header-top-text {
+        font-size: 42px;
+    }
 }
