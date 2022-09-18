@@ -42,9 +42,12 @@
             </h2>
             <div class="row">
                 <div class="col-8">
-                    <mat-checkbox [(ngModel)]="uploadImage">
-                        Upload New Image
-                    </mat-checkbox>
+                    <label id="image-label">Image </label>
+                    <mat-radio-group aria-label="Image" aria-labelledby="image-label" [(ngModel)]="uploadImage">
+                        <mat-radio-button [value]="false">Enter URL</mat-radio-button>
+                        <mat-radio-button style="margin-left: 10px;" [value]="true">Upload a new file</mat-radio-button>
+
+                    </mat-radio-group>
 
                     <mat-form-field *ngIf="!uploadImage">
                         <mat-label>Enter Image Url</mat-label>
@@ -65,9 +68,14 @@
             <div class="row">
 
                 <div class="col-8">
-                    <mat-checkbox [(ngModel)]="uploadAudio">
-                        Upload New Audio
-                    </mat-checkbox>
+                    <label id="image-label">Audio </label>
+                    <mat-radio-group aria-label="Audio" aria-labelledby="audio-label" [(ngModel)]="uploadAudio">
+                        <mat-radio-button [value]="false">Enter URL</mat-radio-button>
+                        <mat-radio-button style="margin-left: 10px;" [value]="true">Upload a new file</mat-radio-button>
+
+                    </mat-radio-group>
+
+
 
                     <mat-form-field *ngIf="!uploadAudio">
                         <mat-label>Enter Audio Url</mat-label>

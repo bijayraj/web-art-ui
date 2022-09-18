@@ -17,13 +17,13 @@ export class JwtInterceptor implements HttpInterceptor {
         const jwtToken = localStorage.getItem('token');
 
         const isApiUrl = request.url.startsWith(environment.apiUrl);
-        console.log(isApiUrl)
-        console.log(user)
-        // console.log(user.jwtToken);
-        console.log(jwtToken);
+        // console.log(isApiUrl)
+        // console.log(user)
+        // // console.log(user.jwtToken);
+        // console.log(jwtToken);
 
         if (jwtToken && isApiUrl) {
-            console.log('Intersepted request. Token is');
+            // console.log('Intersepted request. Token is');
             // console.log(user.jwtToken);
 
             request = request.clone({

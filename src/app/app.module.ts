@@ -41,6 +41,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatRadioModule } from '@angular/material/radio'
+
 
 @NgModule({
   declarations: [
@@ -83,8 +85,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     MatPaginatorModule,
     MatDialogModule,
     MatProgressBarModule,
-    MatCheckboxModule
-
+    MatCheckboxModule,
+    MatRadioModule
 
   ],
   providers: [
