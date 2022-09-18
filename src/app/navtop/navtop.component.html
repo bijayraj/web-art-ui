@@ -17,17 +17,15 @@
                 </a>
             </li>
 
-            <!-- <li>
-                <a class="menu-link" routerLink="/exhibits">Exhibits</a>
-            </li> -->
 
             <li *ngIf="user">
-                <a (click)="logout()" class="menu-link">
+                <a (click)="logout()" class="menu-link hand-pointer">
                     <mat-icon>swap_horizontal_circle</mat-icon>Logout
                 </a>
             </li>
+
             <li *ngIf="!user">
-                <a (click)="login()" class="menu-link">
+                <a (click)="login()" class="menu-link hand-pointer">
                     <mat-icon>account_box</mat-icon>Login
                 </a>
             </li>
