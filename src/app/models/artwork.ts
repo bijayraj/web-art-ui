@@ -15,4 +15,7 @@ export class Artwork {
     exhibitName?: string;
     assetCount?: number;
     ArtworkAssets?: ArtworkAsset[];
+    longDescription?: string;
+    approvedBy?: number;
+    visible?: boolean;
 }

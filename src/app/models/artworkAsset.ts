@@ -8,4 +8,8 @@ export class ArtworkAsset {
     visible!: boolean;
     approved?: boolean;
     approvedDate?: string;
+    approvedBy?: number;
+    autoPlay?: boolean;
+    onlyInHeadphone?: boolean;
+    longDescription?: string;
 }

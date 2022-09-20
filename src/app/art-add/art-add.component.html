@@ -75,8 +75,6 @@
 
                     </mat-radio-group>
 
-
-
                     <mat-form-field *ngIf="!uploadAudio">
                         <mat-label>Enter Audio Url</mat-label>
                         <input matInput placeholder="Audio Url" [(ngModel)]="audioUrl" required>
@@ -92,8 +90,22 @@
 
                 <div class="col-12">
                     <mat-slide-toggle [(ngModel)]="autoPlayAudio">Auto-play Audio</mat-slide-toggle>
+
+                    <mat-slide-toggle [(ngModel)]="onlyInHeadphone">Only in Earphones</mat-slide-toggle>
+
                 </div>
 
+
+            </div>
+
+            <div class="row">
+                <div col>
+                    <mat-form-field>
+                        <mat-label>Long Description</mat-label>
+                        <textarea matInput placeholder="AI Fodder" [(ngModel)]="longDescription"></textarea>
+                    </mat-form-field>
+
+                </div>
             </div>
 
         </div>

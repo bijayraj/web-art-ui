@@ -26,6 +26,7 @@ export class ArtAddComponent implements OnInit {
   imageUrl: string = '';
   audioUrl: string = '';
   autoPlayAudio: boolean = false;
+  onlyInHeadphone: boolean = false;
   description = '';
 
   audioAsset?: ArtworkAsset;
@@ -33,6 +34,8 @@ export class ArtAddComponent implements OnInit {
 
   uploadImage: boolean = false;
   uploadAudio: boolean = false;
+
+  longDescription: string = '';
 
   constructor(private authService: AuthenticationService,
     private artworkService: ArtworkService,
@@ -54,7 +57,10 @@ export class ArtAddComponent implements OnInit {
       ExhibitId: [1, [Validators.required]],
       title: ['', [Validators.required, Validators.maxLength(30)]],
       description: [''],
-      moreInfo: ['']
+      moreInfo: [''],
+      longDescription: [''],
+      approved: [true]
+
     });
 
     this.route.params.subscribe(params => {
@@ -75,7 +81,7 @@ export class ArtAddComponent implements OnInit {
             const imageAsset = {
               id: 0,
               ArtworkId: 0,
-              visible: this.autoPlayAudio,
+              visible: true,
               approved: true,
               assetType: 0,
               address: this.imageUrl,
@@ -84,7 +90,9 @@ export class ArtAddComponent implements OnInit {
             };
 
             const audioAsset = {
-              ...imageAsset
+              ...imageAsset,
+              autoPlay: this.autoPlayAudio,
+              onlyInHeadphone: this.onlyInHeadphone
             };
             this.imageAsset = imageAsset;
             this.audioAsset = audioAsset;
@@ -93,17 +101,21 @@ export class ArtAddComponent implements OnInit {
           // this.artForm.controls['description'].patchValue(this.artwork.description);
           this.imageUrl = this.imageAsset?.address || '';
           this.audioUrl = this.audioAsset?.address || '';
-          this.autoPlayAudio = this.audioAsset?.visible == undefined ? true : this.audioAsset?.visible;
+          this.autoPlayAudio = this.audioAsset?.autoPlay == undefined ? false : this.audioAsset?.autoPlay;
+          this.onlyInHeadphone = this.audioAsset?.onlyInHeadphone == undefined ? false : this.audioAsset?.onlyInHeadphone;
 
 
           this.title = "Edit Art"
 
+          // TextArea to formcontrol binding didn't work
+          this.longDescription = this.artwork.longDescription || '';
 
           this.artForm.patchValue({
             title: this.artwork.title,
             description: this.artwork.description,
             moreInfo: this.artwork.moreInfo,
-            ExhibitId: this.artwork.ExhibitId
+            ExhibitId: this.artwork.ExhibitId,
+            longDescription: this.artwork.longDescription
           });
 
         });
@@ -127,14 +139,21 @@ export class ArtAddComponent implements OnInit {
   }
 
   editArt() {
+    this.artForm.patchValue({
+      longDescription: this.longDescription
+    });
+
     const artValue = this.artForm.value;
     artValue.id = this.artwork.id;
+
+
     this.artworkService.edit(artValue, this.artwork.id).subscribe(data => {
       console.log('Edited artwork');
 
       this.audioAsset!.address = this.audioUrl;
       this.imageAsset!.address = this.imageUrl;
-      this.audioAsset!.visible = this.autoPlayAudio;
+      this.audioAsset!.autoPlay = this.autoPlayAudio;
+      this.audioAsset!.onlyInHeadphone = this.onlyInHeadphone;
 
       if (this.audioAsset?.id == 0) {
         this.audioAsset.ArtworkId = this.artwork.id;
@@ -181,19 +200,25 @@ export class ArtAddComponent implements OnInit {
     console.log('Submitted');
     console.log(this.artForm.value);
 
+    this.artForm.patchValue({
+      longDescription: this.longDescription
+    });
+
+
     const imageAsset = {
       ArtworkId: 0,
-      visible: this.autoPlayAudio,
+      visible: true,
       approved: true,
       assetType: 0,
       address: this.imageUrl,
       title: 'asset',
       description: 'description'
-
     };
 
     const audioAsset = {
-      ...imageAsset
+      ...imageAsset,
+      autoPlay: this.autoPlayAudio,
+      onlyInHeadphone: this.onlyInHeadphone
     };
 
     audioAsset.assetType = 1;
@@ -223,13 +248,6 @@ export class ArtAddComponent implements OnInit {
             this.router.navigate(['arts']);
           });
         });
-
-
-
-
-
-
-
       });
 
     }
