@@ -89,13 +89,9 @@
                 </div>
 
                 <div class="col-12">
-                    <mat-slide-toggle [(ngModel)]="autoPlayAudio">Auto-play Audio</mat-slide-toggle>
-
+                    <!-- <mat-slide-toggle [(ngModel)]="autoPlayAudio">Auto-play Audio</mat-slide-toggle> -->
                     <mat-slide-toggle [(ngModel)]="onlyInHeadphone">Only in Earphones</mat-slide-toggle>
-
                 </div>
-
-
             </div>
 
             <div class="row">
@@ -103,6 +99,18 @@
                     <mat-form-field>
                         <mat-label>Long Description</mat-label>
                         <textarea matInput placeholder="AI Fodder" [(ngModel)]="longDescription"></textarea>
+                    </mat-form-field>
+
+                </div>
+            </div>
+
+
+            <div *ngIf="user && (user.role == 'Admin' || user.role=='SAdmin') &&  artwork && artwork.id != 0 && artwork.underReview"
+                class="row">
+                <div col>
+                    <mat-form-field>
+                        <mat-label>Review Comment</mat-label>
+                        <textarea matInput placeholder="Comment" [(ngModel)]="approvalComment"></textarea>
                     </mat-form-field>
 
                 </div>
@@ -119,6 +127,24 @@
             <button style="margin-left: 10px;" mat-raised-button color="warn" (click)="cancel()">
                 <mat-icon>cancel</mat-icon> Cancel
             </button>
+
+            <button *ngIf=" artwork && artwork.id != 0 && !artwork.underReview" style="margin-left: 10px;"
+                mat-raised-button color="warn" (click)="approvalRequest()">
+                <mat-icon>cancel</mat-icon> Request for Approval
+            </button>
+
+            <button
+                *ngIf="user && (user.role == 'Admin' || user.role=='SAdmin') &&  artwork && artwork.id != 0 && artwork.underReview"
+                style="margin-left: 10px;" mat-raised-button color="warn" (click)="acceptApproval(false)">
+                <mat-icon>cancel</mat-icon> Approve
+            </button>
+
+            <button
+                *ngIf="user && (user.role == 'Admin' || user.role=='SAdmin') &&  artwork && artwork.id != 0 && artwork.underReview"
+                style="margin-left: 10px;" mat-raised-button color="warn" (click)="acceptApproval(true)">
+                <mat-icon>cancel</mat-icon> Reject
+            </button>
+
         </div>
 
     </mat-card-content>

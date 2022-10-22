@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddUserComponent } from './add-user/add-user.component';
+import { ApprovalsComponent } from './approvals/approvals.component';
 import { ArtAddComponent } from './art-add/art-add.component';
 import { ArtsComponent } from './arts/arts.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {
@@ -35,6 +38,33 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'users/:id',
+    component: AddUserComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: 'SAdmin'
+    }
+
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: 'SAdmin'
+    }
+
+  },
+  {
+    path: 'approvals',
+    component: ApprovalsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: 'SAdmin,Admin'
+    }
+
   }
 
 

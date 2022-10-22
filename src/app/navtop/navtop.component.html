@@ -10,10 +10,22 @@
     <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
 
-            <li style="vertical-align: middle; !important">
-
+            <li *ngIf="user" style="vertical-align: middle; !important">
                 <a class="menu-link" routerLink="/arts">
                     <mat-icon>view_comfy</mat-icon>Arts
+                </a>
+            </li>
+
+            <li *ngIf="user && user.role == 'SAdmin'" style="vertical-align: middle; !important">
+                <a class="menu-link" routerLink="/users">
+                    <mat-icon>supervised_user_circle</mat-icon>Users
+                </a>
+            </li>
+
+            <li *ngIf="user && (user.role == 'SAdmin' || user.role == 'Admin') "
+                style="vertical-align: middle; !important">
+                <a class="menu-link" routerLink="/approvals">
+                    <mat-icon>thumbs_up_down</mat-icon>Approvals
                 </a>
             </li>
 

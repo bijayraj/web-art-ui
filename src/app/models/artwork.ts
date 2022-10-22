@@ -18,4 +18,5 @@ export class Artwork {
     longDescription?: string;
     approvedBy?: number;
     visible?: boolean;
+    underReview?: boolean;
 }

@@ -4,12 +4,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { Artwork } from '../models/artwork';
+import { ArtworkApproval } from '../models/artwork-approval';
 import { ArtworkAsset } from '../models/artworkAsset';
 import { Exhibit } from '../models/exhibit';
+import { User } from '../models/user';
+import { ArtworkApprovalService } from '../services/artwork-approval.service';
 import { ArtworkService } from '../services/artwork.service';
 import { AssetService } from '../services/asset.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { ExhibitService } from '../services/exhibit.service';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-art-add',
@@ -25,7 +29,7 @@ export class ArtAddComponent implements OnInit {
 
   imageUrl: string = '';
   audioUrl: string = '';
-  autoPlayAudio: boolean = false;
+  autoPlayAudio: boolean = true;
   onlyInHeadphone: boolean = false;
   description = '';
 
@@ -36,6 +40,11 @@ export class ArtAddComponent implements OnInit {
   uploadAudio: boolean = false;
 
   longDescription: string = '';
+  user?: User;
+
+  approvalObject?: ArtworkApproval = new ArtworkApproval();
+  approvalComment: string = '';
+
 
   constructor(private authService: AuthenticationService,
     private artworkService: ArtworkService,
@@ -44,11 +53,18 @@ export class ArtAddComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private assetService: AssetService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private artworkApprovalService: ArtworkApprovalService,
+    private notificationService: NotificationService
 
   ) { }
 
   ngOnInit(): void {
+
+    this.authService.userSubject.subscribe((data) => {
+      this.user = data;
+    });
+
     this.exhibitService.getAll().subscribe((data: any) => {
       this.exhibits = data as Exhibit[];
     });
@@ -67,63 +83,74 @@ export class ArtAddComponent implements OnInit {
       const id = params['id'];
 
       if (id && id > 0) {
-        this.artworkService.get(id).subscribe(data => {
-          this.artwork = data;
-          console.log(data);
-          console.log(this.artwork);
-
-          if (this.artwork.ArtworkAssets && this.artwork.ArtworkAssets.length > 0) {
-
-            this.imageAsset = this.artwork.ArtworkAssets?.filter(c => c.assetType == 0).shift();
-            this.audioAsset = this.artwork.ArtworkAssets?.filter(c => c.assetType == 1).shift();
-
-          } else {
-            const imageAsset = {
-              id: 0,
-              ArtworkId: 0,
-              visible: true,
-              approved: true,
-              assetType: 0,
-              address: this.imageUrl,
-              title: 'asset',
-              description: 'description'
-            };
-
-            const audioAsset = {
-              ...imageAsset,
-              autoPlay: this.autoPlayAudio,
-              onlyInHeadphone: this.onlyInHeadphone
-            };
-            this.imageAsset = imageAsset;
-            this.audioAsset = audioAsset;
-            this.audioAsset.assetType = 1;
-          }
-          // this.artForm.controls['description'].patchValue(this.artwork.description);
-          this.imageUrl = this.imageAsset?.address || '';
-          this.audioUrl = this.audioAsset?.address || '';
-          this.autoPlayAudio = this.audioAsset?.autoPlay == undefined ? false : this.audioAsset?.autoPlay;
-          this.onlyInHeadphone = this.audioAsset?.onlyInHeadphone == undefined ? false : this.audioAsset?.onlyInHeadphone;
-
-
-          this.title = "Edit Art"
-
-          // TextArea to formcontrol binding didn't work
-          this.longDescription = this.artwork.longDescription || '';
-
-          this.artForm.patchValue({
-            title: this.artwork.title,
-            description: this.artwork.description,
-            moreInfo: this.artwork.moreInfo,
-            ExhibitId: this.artwork.ExhibitId,
-            longDescription: this.artwork.longDescription
-          });
-
-        });
+        this.loadArtwork(id);
       }
       else {
         this.artwork.id = 0;
         this.title = "Create Art"
       }
+
+    });
+  }
+
+  loadArtwork(id: number) {
+    this.artworkService.get(id).subscribe(data => {
+      this.artwork = data;
+      console.log(data);
+      console.log(this.artwork);
+
+      if (this.artwork.ArtworkAssets && this.artwork.ArtworkAssets.length > 0) {
+
+        this.imageAsset = this.artwork.ArtworkAssets?.filter(c => c.assetType == 0).shift();
+        this.audioAsset = this.artwork.ArtworkAssets?.filter(c => c.assetType == 1).shift();
+
+      } else {
+        const imageAsset = {
+          id: 0,
+          ArtworkId: 0,
+          visible: true,
+          approved: true,
+          assetType: 0,
+          address: this.imageUrl,
+          title: 'asset',
+          description: 'description'
+        };
+
+        const audioAsset = {
+          ...imageAsset,
+          autoPlay: this.autoPlayAudio,
+          onlyInHeadphone: this.onlyInHeadphone
+        };
+        this.imageAsset = imageAsset;
+        this.audioAsset = audioAsset;
+        this.audioAsset.assetType = 1;
+      }
+      // this.artForm.controls['description'].patchValue(this.artwork.description);
+      this.imageUrl = this.imageAsset?.address || '';
+      this.audioUrl = this.audioAsset?.address || '';
+      this.autoPlayAudio = this.audioAsset?.autoPlay == undefined ? false : this.audioAsset?.autoPlay;
+      this.onlyInHeadphone = this.audioAsset?.onlyInHeadphone == undefined ? false : this.audioAsset?.onlyInHeadphone;
+
+
+      this.title = "Edit Art"
+
+      // TextArea to formcontrol binding didn't work
+      this.longDescription = this.artwork.longDescription || '';
+
+      this.artForm.patchValue({
+        title: this.artwork.title,
+        description: this.artwork.description,
+        moreInfo: this.artwork.moreInfo,
+        ExhibitId: this.artwork.ExhibitId,
+        longDescription: this.artwork.longDescription
+      });
+
+      this.artworkApprovalService.getByArtworkId(this.artwork.id).subscribe(data => {
+        console.log('Got approval object:');
+        console.log(data);
+        this.approvalObject = data;
+        this.approvalComment = this.approvalObject?.comment || '';
+      })
 
     });
   }
@@ -263,5 +290,35 @@ export class ArtAddComponent implements OnInit {
 
   updateAudioUrl(fullPath: string) {
     this.audioUrl = fullPath;
+  }
+
+  approvalRequest() {
+
+    this.artworkApprovalService.requestApproval(this.artwork.id).subscribe(data => {
+      console.log(data);
+      this.loadArtwork(this.artwork.id);
+      this.notificationService.alert('Approval Request sent');
+    });
+
+    // this.notificationService.confirmation('Are you sure to send this for approval?', () => {
+    //   this.artworkApprovalService.requestApproval(this.artwork.id).subscribe(data => {
+    //     console.log(data);
+    //   });
+    //   this.notificationService.alert('Request sent', 'Request sent');
+    // });
+
+  }
+
+
+  acceptApproval(reject: boolean) {
+    if (!this.approvalObject) {
+      console.log('No request to approve');
+      return;
+    }
+    this.artworkApprovalService.approveReject(this.approvalObject?.id, reject, this.approvalComment).subscribe(data => {
+      console.log(data);
+      this.loadArtwork(this.artwork.id);
+      this.notificationService.success('Approval complete');
+    });
   }
 }

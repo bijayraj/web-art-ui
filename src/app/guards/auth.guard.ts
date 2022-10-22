@@ -46,6 +46,13 @@ export class AuthGuard implements CanLoad {
     const user = this.authService.userValue;
     if (user) {
       // logged in so return true
+
+      if (route.data['role'] && route.data['role'].indexOf(user.role) === -1) {
+        console.log('No authorization');
+        alert('You do not have access to this feature. Login with the administrator credentials');
+        return false;
+      }
+
       return true;
     } else {
       // not logged in so redirect to login page with the return url

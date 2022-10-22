@@ -41,7 +41,11 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { MatCheckboxModule } from '@angular/material/checkbox'
-import { MatRadioModule } from '@angular/material/radio'
+import { MatRadioModule } from '@angular/material/radio';
+import { UsersComponent } from './users/users.component';
+import { AddUserComponent } from './add-user/add-user.component'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ApprovalsComponent } from './approvals/approvals.component';
 
 
 @NgModule({
@@ -56,7 +60,10 @@ import { MatRadioModule } from '@angular/material/radio'
     SafeHtmlPipe,
     ConfirmDialogComponent,
     ArtAddComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    UsersComponent,
+    AddUserComponent,
+    ApprovalsComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +93,8 @@ import { MatRadioModule } from '@angular/material/radio'
     MatDialogModule,
     MatProgressBarModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSnackBarModule
 
   ],
   providers: [

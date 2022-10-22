@@ -17,11 +17,29 @@ export class UserService {
   ) {
   }
 
-  addUser(userData:any) {
+  addUser(userData: any) {
     return this.http.post<any>(`${environment.apiUrl}/user`, userData, { withCredentials: false })
       .pipe(map(user => {
         return user;
       }));
   }
+
+  getAll() {
+    return this.http.get<any>(`${environment.apiUrl}/user`);
+  }
+
+  delete(id: number) {
+    return this.http.delete<any>(`${environment.apiUrl}/user/${id}`);
+  }
+
+  edit(id: number, userData: any) {
+    return this.http.put<any>(`${environment.apiUrl}/user/${id}`, userData)
+      .pipe(map(user => user));
+  }
+
+  get(id: number) {
+    return this.http.get<any>(`${environment.apiUrl}/user/getone/${id}`);
+  }
+
 }
 

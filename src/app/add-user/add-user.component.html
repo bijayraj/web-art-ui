@@ -1,0 +1,53 @@
+<h1 *ngIf="isAddMode">Add User</h1>
+<h1 *ngIf="!isAddMode">Edit User</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <mat-form-field class="form-element">
+        <input matInput placeholder="Email" formControlName="username">
+        <mat-error *ngIf="!form.controls['username'].valid && form.controls['username'].touched">
+            Enter valid email
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+        <input matInput placeholder="First Name" formControlName="firstName">
+        <mat-error *ngIf="!form.controls['firstName'].valid && form.controls['firstName'].touched">
+            First name is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+        <input matInput placeholder="Last Name" formControlName="lastName">
+        <mat-error *ngIf="!form.controls['lastName'].valid && form.controls['lastName'].touched">
+            Last name is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+
+        <mat-select formControlName="role">
+            <mat-option *ngFor="let role of roles" [value]="role">
+                {{role}}
+            </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="!form.controls['role'].valid && form.controls['role'].touched">
+            Role is required
+        </mat-error>
+
+
+    </mat-form-field>
+
+
+    <mat-label>Password will be generated and sent to the user's email when creation is complete.</mat-label>
+
+
+
+    <div class="form-element">
+        <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!form.valid"><span
+                *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save</button>
+        <a routerLink="/users" class="btn btn-link">Cancel</a>
+
+    </div>
+</form>
