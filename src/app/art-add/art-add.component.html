@@ -129,13 +129,13 @@
             </button>
 
             <button *ngIf=" artwork && artwork.id != 0 && !artwork.underReview" style="margin-left: 10px;"
-                mat-raised-button color="warn" (click)="approvalRequest()">
+                mat-raised-button color="accent" (click)="approvalRequest()">
                 <mat-icon>cancel</mat-icon> Request for Approval
             </button>
 
             <button
                 *ngIf="user && (user.role == 'Admin' || user.role=='SAdmin') &&  artwork && artwork.id != 0 && artwork.underReview"
-                style="margin-left: 10px;" mat-raised-button color="warn" (click)="acceptApproval(false)">
+                style="margin-left: 10px;" mat-raised-button color="primary" (click)="acceptApproval(false)">
                 <mat-icon>cancel</mat-icon> Approve
             </button>
 

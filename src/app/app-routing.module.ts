@@ -65,7 +65,16 @@ const routes: Routes = [
       role: 'SAdmin,Admin'
     }
 
-  }
+  },
+  {
+    path: 'approvals/:id',
+    component: ArtAddComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: 'SAdmin,Admin'
+    }
+
+  },
 
 
 ];

@@ -19,7 +19,7 @@ export class ApprovalsComponent implements OnInit {
   approvals: ArtworkApproval[] = [];
   resolved: boolean = false;
 
-  public displayedColumns = ['id', 'artworkId', 'artworkTitle', 'userId', 'username', 'created_at', 'actions'];
+  public displayedColumns = ['id', 'artworkId', 'artworkTitle', 'username', 'created_at', 'actions'];
   public dataSource = new MatTableDataSource<ArtworkApproval>();
 
   @ViewChild(MatSort) sort!: MatSort;

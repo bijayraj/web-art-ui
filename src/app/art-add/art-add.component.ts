@@ -45,6 +45,8 @@ export class ArtAddComponent implements OnInit {
   approvalObject?: ArtworkApproval = new ArtworkApproval();
   approvalComment: string = '';
 
+  isApprovalWindow: boolean = false;
+
 
   constructor(private authService: AuthenticationService,
     private artworkService: ArtworkService,
@@ -60,6 +62,7 @@ export class ArtAddComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
 
     this.authService.userSubject.subscribe((data) => {
       this.user = data;
@@ -83,6 +86,7 @@ export class ArtAddComponent implements OnInit {
       const id = params['id'];
 
       if (id && id > 0) {
+        this.title = "Edit Art";
         this.loadArtwork(id);
       }
       else {
@@ -91,6 +95,15 @@ export class ArtAddComponent implements OnInit {
       }
 
     });
+
+    if (this.router.url.indexOf('/approvals/') > -1) {
+      this.isApprovalWindow = true;
+      this.title = 'Approval'
+    }
+
+
+
+
   }
 
   loadArtwork(id: number) {
@@ -132,7 +145,7 @@ export class ArtAddComponent implements OnInit {
       this.onlyInHeadphone = this.audioAsset?.onlyInHeadphone == undefined ? false : this.audioAsset?.onlyInHeadphone;
 
 
-      this.title = "Edit Art"
+
 
       // TextArea to formcontrol binding didn't work
       this.longDescription = this.artwork.longDescription || '';
