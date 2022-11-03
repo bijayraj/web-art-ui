@@ -21,7 +21,7 @@ const routes: Routes = [
     component: ForgotPasswordBasicComponent
   },
   {
-    path: 'reset-forgot-passord',
+    path: 'reset-forgot-password',
     component: ForgotPasswordComponent
   },
   {
@@ -40,6 +40,10 @@ const routes: Routes = [
     component: ArtAddComponent,
     canActivate: [AuthGuard]
 
+  },
+  {
+    path: 'home',
+    component: HomeComponent
   },
   {
     path: '',

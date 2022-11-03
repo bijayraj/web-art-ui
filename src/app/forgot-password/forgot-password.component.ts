@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { filter, Subject, take, takeUntil } from 'rxjs';
 import Validation from '../helpers/validation';
 import { AuthenticationService } from '../services/authentication.service';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,7 +23,8 @@ export class ForgotPasswordComponent implements OnInit {
     private fb: FormBuilder,
     private _route: ActivatedRoute,
     private router: Router,
-    private _authService: AuthenticationService
+    private _authService: AuthenticationService,
+    private notificationService: NotificationService
   ) {
     this.resetToken = this._route.snapshot.queryParams['token'] || '';
   }
@@ -39,8 +41,24 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   public submit() {
+    const formVal = this.credentials.value;
+    formVal.token = this.resetToken
+    this._authService.changeForgottenPassword(formVal).subscribe(
+      data => {
+        console.log(data);
+        this.notificationService.alert('Password changed. Continue to login');
+        this.router.navigate(['/login'])
+      },
+      err => {
+        console.log(err);
+        this.notificationService.error(
+          'The reset link has expired or is invalid. Please use the new reset link'
+        );
+      }
 
-    this._authService.changeForgottenPassword(this.credentials.value, this.resetToken);
+
+
+    );
   }
 
 }

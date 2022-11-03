@@ -140,8 +140,8 @@ export class AuthenticationService {
   }
 
 
-  public changeForgottenPassword(credential: { password: string, rePassword: string }, token: string) {
-    return this.http.post<any>(`${environment.apiUrl}/forgot-password/${token}`, credential, { withCredentials: false })
+  public changeForgottenPassword(credential: { password: string, rePassword: string, token: string }) {
+    return this.http.post<any>(`${environment.apiUrl}/forgot-password`, credential, { withCredentials: false })
       .pipe(map(user => {
         return user;
       }));
