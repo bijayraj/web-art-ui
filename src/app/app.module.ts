@@ -46,6 +46,8 @@ import { UsersComponent } from './users/users.component';
 import { AddUserComponent } from './add-user/add-user.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApprovalsComponent } from './approvals/approvals.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ForgotPasswordBasicComponent } from './forgot-password-basic/forgot-password-basic.component';
 
 
 @NgModule({
@@ -63,7 +65,9 @@ import { ApprovalsComponent } from './approvals/approvals.component';
     FileUploadComponent,
     UsersComponent,
     AddUserComponent,
-    ApprovalsComponent
+    ApprovalsComponent,
+    ForgotPasswordComponent,
+    ForgotPasswordBasicComponent
   ],
   imports: [
     BrowserModule,

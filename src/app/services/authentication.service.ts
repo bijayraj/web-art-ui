@@ -23,14 +23,14 @@ export class AuthenticationService {
     // if (sessionStorage.getItem('user')){
     //   const userInfo = JSON.parse(sessionStorage.getItem('user') || '' );
     //   this.userSubject = new BehaviorSubject<User>(userInfo as User);
-      
+
     // }
     // else{
     //   this.userSubject = new BehaviorSubject<User>(null as any);
     // }
     this.userSubject = new BehaviorSubject<User>(null as any);
     this.user = this.userSubject.asObservable();
-    
+
   }
 
 
@@ -57,7 +57,7 @@ export class AuthenticationService {
     //   //     this.startRefreshTokenTimer();
     //   //     console.log(user);
     //   // }));
-      
+
     // } else {
     //   console.log('Token not found');
     //   this.userSubject.next(null as any);
@@ -65,7 +65,7 @@ export class AuthenticationService {
     // }
   }
 
-  login(credential: { username:string, password:string }) {
+  login(credential: { username: string, password: string }) {
     return this.http.post<any>(`${environment.apiUrl}/login`, credential, { withCredentials: false })
       .pipe(map(user => {
         this.userSubject.next(user);
@@ -93,25 +93,25 @@ export class AuthenticationService {
     const refreshToken = localStorage.getItem('token2');//localStorage.getItem('token2');
     console.log('REFRESH TOKEN');
     console.log(refreshToken);
-    return this.http.post<any>(`${environment.apiUrl}/refresh-token?refreshToken=${refreshToken}`, {refreshToken : refreshToken})
-        .pipe(map((user) => {
-          console.log('GOT THE RETURN FROM THE REFERSH')
-          console.log(user);
-            this.setSession(user);
-            this.userSubject.next(user);
-            this.startRefreshTokenTimer();
-            return user;
-        }));
+    return this.http.post<any>(`${environment.apiUrl}/refresh-token?refreshToken=${refreshToken}`, { refreshToken: refreshToken })
+      .pipe(map((user) => {
+        console.log('GOT THE RETURN FROM THE REFERSH')
+        console.log(user);
+        this.setSession(user);
+        this.userSubject.next(user);
+        this.startRefreshTokenTimer();
+        return user;
+      }));
   }
 
 
-  private  setSession(user:any) {
+  private setSession(user: any) {
     localStorage.setItem('token', user.jwtToken);
-    localStorage.setItem('token2',  user.refreshToken );
+    localStorage.setItem('token2', user.refreshToken);
     sessionStorage.setItem('user', JSON.stringify(user));
   }
 
-  private  clearSession() {
+  private clearSession() {
 
     localStorage.removeItem('token');
     localStorage.removeItem('token2');
@@ -130,7 +130,7 @@ export class AuthenticationService {
     const expires = new Date(jwtToken.exp * 1000);
     const timeout = expires.getTime() - Date.now() - (60 * 1000);
     this.refreshTokenTimeout = setTimeout(async () => {
-      const postObj =  this.refreshToken();
+      const postObj = this.refreshToken();
       postObj?.subscribe();
     }, timeout);
   }
@@ -138,4 +138,18 @@ export class AuthenticationService {
   private stopRefreshTokenTimer() {
     clearTimeout(this.refreshTokenTimeout);
   }
+
+
+  public changeForgottenPassword(credential: { password: string, rePassword: string }, token: string) {
+    return this.http.post<any>(`${environment.apiUrl}/forgot-password/${token}`, credential, { withCredentials: false })
+      .pipe(map(user => {
+        return user;
+      }));
+  }
+
+  public forgotPassword(username: string) {
+    return this.http.get<any>(`${environment.apiUrl}/forgot-password/${username}`, { withCredentials: false })
+
+  }
+
 }

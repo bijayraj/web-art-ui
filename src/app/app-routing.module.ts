@@ -4,6 +4,8 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { ApprovalsComponent } from './approvals/approvals.component';
 import { ArtAddComponent } from './art-add/art-add.component';
 import { ArtsComponent } from './arts/arts.component';
+import { ForgotPasswordBasicComponent } from './forgot-password-basic/forgot-password-basic.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -15,8 +17,12 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'home',
-    component: HomeComponent
+    path: 'forgot-password',
+    component: ForgotPasswordBasicComponent
+  },
+  {
+    path: 'reset-forgot-passord',
+    component: ForgotPasswordComponent
   },
   {
     path: 'arts',
