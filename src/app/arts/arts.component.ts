@@ -17,7 +17,7 @@ export class ArtsComponent implements OnInit, AfterViewInit {
 
   allArts: Artwork[] = [];
 
-  public displayedColumns = ['id', 'title', 'description', 'created_at', 'actions'];
+  public displayedColumns = ['id', 'title', 'description', 'created_at', 'username', 'tagCount', 'approved', 'actions'];
   public dataSource = new MatTableDataSource<Artwork>();
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -30,7 +30,7 @@ export class ArtsComponent implements OnInit, AfterViewInit {
   loadArts() {
     this.artService.getAll().subscribe(data => {
       this.dataSource.data = data as Artwork[];
-      // console.log(data);
+      console.log(data);
     });
   }
   ngOnInit(): void {
