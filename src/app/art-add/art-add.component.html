@@ -45,7 +45,7 @@
                     <label id="image-label">Image </label>
                     <mat-radio-group aria-label="Image" aria-labelledby="image-label" [(ngModel)]="uploadImage">
                         <mat-radio-button [value]="false">Enter URL</mat-radio-button>
-                        <mat-radio-button style="margin-left: 10px;" [value]="true">Upload a new file</mat-radio-button>
+                        <!-- <mat-radio-button style="margin-left: 10px;" [value]="true">Upload a new file</mat-radio-button> -->
 
                     </mat-radio-group>
 
@@ -71,7 +71,7 @@
                     <label id="image-label">Audio </label>
                     <mat-radio-group aria-label="Audio" aria-labelledby="audio-label" [(ngModel)]="uploadAudio">
                         <mat-radio-button [value]="false">Enter URL</mat-radio-button>
-                        <mat-radio-button style="margin-left: 10px;" [value]="true">Upload a new file</mat-radio-button>
+                        <!-- <mat-radio-button style="margin-left: 10px;" [value]="true">Upload a new file</mat-radio-button> -->
 
                     </mat-radio-group>
 
@@ -98,7 +98,7 @@
                 <div col>
                     <mat-form-field>
                         <mat-label>Long Description</mat-label>
-                        <textarea matInput placeholder="AI Fodder" [(ngModel)]="longDescription"></textarea>
+                        <textarea rows="6" matInput placeholder="AI Fodder" [(ngModel)]="longDescription"></textarea>
                     </mat-form-field>
 
                 </div>
@@ -146,6 +146,8 @@
             </button>
 
         </div>
+
+
 
     </mat-card-content>
 </mat-card>
