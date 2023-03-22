@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:3001',
-  apiUrl: 'http://localhost:3001/api/v1'
-  // apiBaseUrl: 'http://170.187.152.5:3001',
-  // apiUrl: 'http://170.187.152.5:3001/api/v1'
+  // apiBaseUrl: 'http://localhost:3001',
+  // apiUrl: 'http://localhost:3001/api/v1'
+  apiBaseUrl: 'http://170.187.152.5:3001',
+  apiUrl: 'http://170.187.152.5:3001/api/v1'
 
 };
 
